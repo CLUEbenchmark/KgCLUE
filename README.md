@@ -3,7 +3,7 @@
 KgCLUE: 大规模基于知识图谱的问答
 
 
-<a href='https://arxiv.org/abs/2107.07498'>FewCLUE: A Chinese Few-shot Learning Evaluation Benchmark</a>
+<a href='https://arxiv.org/abs/2107.07498'>kGCLUE: A Large-scale Knowledge Graph Question Answering Evaluation Benchmark for Chinese</a>
 
 
 ## 内容导引
