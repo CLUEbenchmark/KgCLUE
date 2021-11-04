@@ -28,7 +28,7 @@ KgCLUE: 大规模基于知识图谱的问答
  
  KBQA利可以用图谱丰富的语义关联信息，能够深入理解用户问题并给出答案，近年来吸引了学术界和工业界的广泛关注。KBQA主要任务是将自然语言问题（NLQ）通过不同方法映射到结构化的查询，并在知识图谱中获取答案。
  
- KgCLUE：中文学习测评基准，基于CLUE的积累和经验，并结合KBQA的特点和近期的发展趋势，精心设计了该测评，希望可以促进中文领域上KBQA领域更多的研究、应用和发展。
+ KgCLUE：中文KBQA测评基准，基于CLUE的积累和经验，并结合KBQA的特点和近期的发展趋势，精心设计了该测评，希望可以促进中文领域上KBQA领域更多的研究、应用和发展。
 
 
    <img src="https://github.com/CLUEbenchmark/FewCLUE/blob/main/resources/img/fewclue_paper.jpeg"  width="100%" height="100%" />   
