@@ -7,22 +7,7 @@
 
 ## 知识库格式
 
-百度百科十大热词——2021·10	中文名	百度百科十大热词——2021·10
+https://uploader.shimo.im/f/hLhX5eZ5Gf2MSxIP.png!thumbnail?accessToken=eyJhbGciOiJIUzI1NiIsImtpZCI6ImRlZmF1bHQiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhY2Nlc3NfcmVzb3VyY2UiLCJleHAiOjE2MzYwMTgzMTYsImciOiJ2UHE5cnBjSnJQZGdQQzlKIiwiaWF0IjoxNjM2MDE4MDE2LCJ1c2VySWQiOjQyMjU5MjE3fQ.FReofR2mjHrh7w2pmB4n1MYN7B365K2h5BgXmSkr2KQ![image](https://user-images.githubusercontent.com/32155965/140289646-1e01a77e-539c-4cda-aa26-3e24226f8e42.png)
 
-百度百科十大热词——2021·10	榜单类型	月度榜单
-
-百度百科十大热词——2021·10	出品团队	百科热词团队
-
-百度百科十大热词——2021·10	榜单来源	百科数据、网友投票
-
-女航天员	中文名	女航天员
-
-女航天员	别名	女宇航员
-
-女航天员	含义	进行过太空飞行的女性
-
-女航天员	首位	前苏联捷列什科娃
-
-女航天员	中国首位	刘洋
 
 知识库中数据存储格式如上，每一行是一个三元组
