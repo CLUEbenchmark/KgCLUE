@@ -15,7 +15,7 @@ KgCLUE: 大规模基于知识图谱的问答
 | [实验分析](#实验分析) | 对人类表现、模型能力和任务进行分析 |
 | [KgCLUE有什么特点](#KgCLUE有什么特点) | 特定介绍 |
 | [基线模型及运行](#基线模型及运行) | 支持多种基线模型 |
-| [KgCLUE测评](#KgCLUE测评) | 小样本测评及榜单 |
+| [KgCLUE测评](#KgCLUE测评) | 知识库问答测评及榜单 |
 | [数据集介绍](#数据集介绍) | 介绍各数据集及示例 |
 | [模型简介](#模型简介) | 基线模型介绍（附图）  |
 | [学习资料(视频及PPT)](#学习资料) | 分享视频、PPT及选手方案 |
@@ -29,44 +29,25 @@ KgCLUE: 大规模基于知识图谱的问答
  KBQA利可以用图谱丰富的语义关联信息，能够深入理解用户问题并给出答案，近年来吸引了学术界和工业界的广泛关注。KBQA主要任务是将自然语言问题（NLQ）通过不同方法映射到结构化的查询，并在知识图谱中获取答案。
  
  KgCLUE：中文KBQA测评基准，基于CLUE的积累和经验，并结合KBQA的特点和近期的发展趋势，精心设计了该测评，希望可以促进中文领域上KBQA领域更多的研究、应用和发展。
-
-
-   <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/knowledge_info.png"  width="100%" height="100%" />   
   
-
-   <img src="https://github.com/CLUEbenchmark/FewCLUE/blob/main/resources/img/FewCLUE.final2.jpeg"  width="100%" height="100%" />   
-
 
 ### UPDATE:
   
-  ******* 2021-05-24: 更新了iflytek的测试集(test.json)，请重新拉取一下，并在这个测试集上做预测。
+  ******* 2021-11-02: 添加了知识库和问答数据集。
   
-  ******* 2021-05-22: 添加支持FewCLUE的ADAPET和EFL的baseline
-
-  ******* 2021-06-07: 添加支持FewCLUE的LM-bff的baseline
-
-  ******* 2021-07-07: NLPCC任务2.FewCLUE测评决赛成绩公布（榜单可继续提交）
+  ******* 2021-11-03: 添加支持KgCLUE的Bert的baseline
 
 
 ## 任务描述和统计
-| Corpus   | Train     | Dev  |Test Public| Test Private | Num Labels| Unlabeled| Task | Metric | Source |
-| :----:| :----:  |:----:  |:----:  |:----:  |:----:  |:----:  |:----:  |:----:  |:----:  |
-|   | Single |Sentence | Tasks  |
-|   EPRSTMT    | 32 | 32 | 610 | 753 | 2 | 19565 | SntmntAnalysis | Acc | E-CommrceReview |
-|   CSLDCP    | 536 |536   | 1784| 2999 | 67 | 18111 | LongTextClassify | Acc |AcademicCNKI |
-|   TNEWS    | 240 | 240 |2010| 1500 | 15 |20000| ShortTextClassify | Acc |NewsTitle |
-|    IFLYTEK   | 928 | 690  | 1749  | 2279 | 119  | 7558 | LongTextClassify| Acc |AppDesc |
-|     | Sentence | Pair | Tasks |
-|    OCNLI   | 32  | 32  |  2520 |  3000 | 3  | 20000 | NLI  |  Acc | 5Genres |
-|    BUSTM   | 32 | 32  | 1772 | 2000  | 2 | 4251|SemanticSmlarty | Acc | AIVirtualAssistant |
-|   |Reading |Comprhnsn |Tasks |
-|     CHID  | 42 |  42 | 2002 | 2000  | 7 | 7585 |  MultipleChoice,idiom | Acc  | Novel,EssayNews |
-|     CSL  | 32 |  32 | 2828 | 3000 | 2 | 19841 | KeywordRecogntn| Acc | AcademicCNKI|
-|     CLUEWSC  | 32 | 32  |  976 | 290  | 2 | 0| CorefResolution  | Acc | ChineseFictionBooks 
 
-    EPRSTMT:电商评论情感分析；CSLDCP：科学文献学科分类；TNEWS:新闻分类；IFLYTEK:APP应用描述主题分类；
-    OCNLI: 自然语言推理；BUSTM: 对话短文本匹配；CHID:成语阅读理解；CSL:摘要判断关键词判别；CLUEWSC: 代词消歧
-    EPRSTMT,CSLDCP,BUSTM 为新任务；其他任务（TNEWS,CHID,IFLYTEK,OCNLI,CSL,CLUEWSC）来自于CLUE benchmark，部分数据集做了新的标注。
+| Corpus   | Train     | Dev  |Test Public| Test Private |
+| :----:| :----:  |:----:  |:----:  |:----:  |
+| Num Samples |        |      |           |              |
+| Num Relations |        |      |           |              |
+
+    本测评提供了一份中文百科知识库和一份问答数据集。
+    百科知识库可通过<a href='https://pan.baidu.com/s/1NyKw2K5bLEABWtzbbTadPQ'>百度云</a>，提取码:nqbq，或者<a href='https://arxiv.org/abs/2107.07498'>Google云</a>下载，知识库统计信息详见<a href='https://pan.baidu.com/s/1NyKw2K5bLEABWtzbbTadPQ'>knowledge/README</a>。
+    问答数据集为one-hop数据，总共包含25000条问答对，切分为4份数据集。
 
 
 ## 实验结果
@@ -587,14 +568,14 @@ bash ./baselines/models_keras/zero_shot/roberta_zeroshot.sh [iflytek\tnews\eprst
 
 ## 问题 Question
     1. 问：测试系统，什么时候开发？
-       答：测评系统在5月1节后才会开放。
+       答：测评系统在11月15日后才会开放。
 
 ## 贡献与参与
     1.问：我有符合代码规范的模型代码，并经过测试，可以贡献到这个项目吗？
      答：可以的。你可以提交一个pull request，并写上说明。
     
     2.问：我正在研究小样本学习，具有较强的模型研究能力，怎么参与到此项目？
-      答：发送邮件到 CLUEbenchmark@163.com，标题为：参与FewCLUE课题，并介绍一下你的研究。
+      答：发送邮件到 CLUEbenchmark@163.com，标题为：参与KgCLUE课题，并介绍一下你的研究。
 
    添加微信入FewCLUE群:
    <img src="https://github.com/CLUEbenchmark/FewCLUE/blob/main/resources/img/ljy.jpeg"  width="45%" height="45%" />   
