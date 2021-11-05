@@ -46,7 +46,7 @@ KgCLUE: 大规模基于知识图谱的问答
 | Num Relations |        |      |           |              |
 
     本测评提供了一份中文百科知识库和一份问答数据集。
-    百科知识库可通过<a href='https://pan.baidu.com/s/1NyKw2K5bLEABWtzbbTadPQ'>百度云</a>，提取码:nqbq，或者<a href='https://arxiv.org/abs/2107.07498'>Google云</a>下载，知识库统计信息详见<a href='https://pan.baidu.com/s/1NyKw2K5bLEABWtzbbTadPQ'>knowledge/README</a>。
+    百科知识库可通过[百度云](https://pan.baidu.com/s/1NyKw2K5bLEABWtzbbTadPQ)，提取码:nqbq，或者<a href='https://arxiv.org/abs/2107.07498'>Google云</a>下载，知识库统计信息详见<a href='https://pan.baidu.com/s/1NyKw2K5bLEABWtzbbTadPQ'>knowledge/README</a>。
     问答数据集为one-hop数据，总共包含25000条问答对，切分为4份数据集。
 
 
