@@ -31,7 +31,7 @@ KgCLUE: 大规模基于知识图谱的问答
  KgCLUE：中文KBQA测评基准，基于CLUE的积累和经验，并结合KBQA的特点和近期的发展趋势，精心设计了该测评，希望可以促进中文领域上KBQA领域更多的研究、应用和发展。
 
 
-   <img src="https://github.com/CLUEbenchmark/FewCLUE/blob/main/resources/img/fewclue_paper.jpeg"  width="100%" height="100%" />   
+   <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/knowledge_info.png"  width="100%" height="100%" />   
   
 
    <img src="https://github.com/CLUEbenchmark/FewCLUE/blob/main/resources/img/FewCLUE.final2.jpeg"  width="100%" height="100%" />   
