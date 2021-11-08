@@ -3,9 +3,6 @@
 KgCLUE: 大规模基于知识图谱的问答
 
 
-<a href='https://arxiv.org/abs/2107.07498'>kgCLUE: A Large-scale Knowledge Graph Question Answering Evaluation Benchmark for Chinese</a>
-
-
 ## 内容导引
 | 章节 | 描述 |
 |-|-|
@@ -37,7 +34,7 @@ KgCLUE: 大规模基于知识图谱的问答
 
 ## 任务描述
 
-KBQA任务即为给定一份。本测评提供了一份中文百科知识库和一份问答数据集。
+KBQA任务即为给定一份知识库和一份问答数据集，从问答数据集中学习问题语义然后从知识库中查询答案。本测评提供了一份中文百科知识库和一份问答数据集。
 
 
 ## 数据集介绍
@@ -172,15 +169,9 @@ bash ./baselines/models_keras/zero_shot/roberta_zeroshot.sh [iflytek\tnews\eprst
     1.问：我有符合代码规范的模型代码，并经过测试，可以贡献到这个项目吗？
      答：可以的。你可以提交一个pull request，并写上说明。
     
-    2.问：我正在研究小样本学习，具有较强的模型研究能力，怎么参与到此项目？
+    2.问：我正在研究KBQA学习，具有较强的模型研究能力，怎么参与到此项目？
       答：发送邮件到 CLUEbenchmark@163.com，标题为：参与KgCLUE课题，并介绍一下你的研究。
 
-   添加微信入FewCLUE群:
-   <img src="https://github.com/CLUEbenchmark/FewCLUE/blob/main/resources/img/ljy.jpeg"  width="45%" height="45%" />   
-
-   <img src="https://github.com/CLUEbenchmark/FewCLUE/blob/main/resources/img/bq_01.jpeg"  width="45%" height="45%" />   
-
-   QQ群:836811304
 
 ## 引用 Reference
 
