@@ -31,6 +31,9 @@ KgCLUE: 大规模基于知识图谱的问答
   
   ******* 2021-11-03: 添加支持KgCLUE的Bert的baseline
 
+  ******* 2021-11-15：添加支持KgCLUE的Roberta-wwm-large的baseline
+
+
 
 ## 任务描述
 
@@ -43,23 +46,10 @@ KBQA任务即为给定一份知识库和一份问答数据集，从问答数据�
 
 知识库可通过<a href="https://pan.baidu.com/s/1NyKw2K5bLEABWtzbbTadPQ">百度云</a>，提取码:nqbq，或着<a href='https://drive.google.com/file/d/1UufUy4_4GK63wmbFnxHu3no7oP_5AOJy/view?usp=sharing'>Google云</a>下载。
 
-### 知识库统计信息
-| 实体数量   | 关系数量     | 高频关系(>100)  |三元组数量| 
-| :----:| :----:  |:----:  |:----:  | 
-|   3137356    |    246380     |   4143     |   23022248     |
-
-  知识库来源于百科数据，由百科搜索页面的事实性三元组构成。
+知识库基本信息详见[knowledge/README](/knowledge/README.md)。
 
 
-### 知识库描述
-
-  <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/knowledge_info.png"  width="100%" height="100%" />   
-
-
-    知识库中数据存储格式如上，每一行是一个三元组，格式为<头实体，关系，尾实体>，每列之间以'\t'分隔，其中头实体后的括号项为该实体的消歧项。
-
-
-### 问答数据集统计信息
+### 问答数据集介绍
 
 | Corpus   | Train     | Dev  |Test Public| Test Private |
 | :----:| :----:  |:----:  |:----:  |:----:  |
@@ -69,23 +59,15 @@ KBQA任务即为给定一份知识库和一份问答数据集，从问答数据�
     问答数据集为one-hop数据，总共包含25000条问答对。
     数据集分为4份，1份训练集；1份验证集；1份公开测试集，用于测试；1份私有测试集，用于提交，不公开。
 
-### 问答数据集描述
 
-   <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/qa.png"  width="100%" height="100%" />  
-
-问答数据集为json格式，每行为一条问答对，问题是one-hop问题，即答案为知识库中的一条三元组。数据格式如下，其中id为问答对索引，quetion为问题，answer为答案，来自知识库，以' ||| '分割。
 
 ## 实验结果
-实验设置：训练集和验证集使用32个样本，或采样16个，测试集正常规模。基础模型使用RoBERT12层chinese_roberta_wwm_ext（GPT系列除外）。
+实验设置：训练集和验证集使用训练集与验证集，测试集使用公开测试集。
 
-   <img src="https://github.com/CLUEbenchmark/FewCLUE/blob/main/resources/img/fewclue_eresult.jpeg"  width="100%" height="100%" />   
-
-    Human: 人类测评成绩；FineTuning: 直接下游任务微调；PET:Pattern Exploiting Training(完形填空形式); 
-    Ptuning: 自动构建模板; Zero-shot: 零样本学习；EFL:自然语言推理形式; ADAPET:PET改进版，带正确标签条件优化
-    FineTuningB:FineTuningBert; FineTuningR:FineTuningRoberta; PtuningB:Ptuning_RoBERTa; PtuningGPT:Ptuning_GPT; 
-    Zero-shot-R，采用chinese_roberta_wwm_ext为基础模型的零样本学习；Zero-shot-G，GPT系列的零样本学习；N”，代表已更新；
-    报告的数字是每一个任务的公开测试集(test_public.json)上的实验效果；CLUE榜单已经可以提交；
-    由于CHID还在继续实验中，暂时未将CHID的分数纳入到最终的分数(Score）中。
+| Model   | F1     | EM  |
+| :----:| :----:  |:----:  |
+| Bert-base-chinese |  81.8      |   79.1   |
+| chinese-roberta-wwm-ext-large |  82.6     |  80.6    |
 
 ## 实验分析
 
@@ -95,23 +77,16 @@ KBQA任务即为给定一份知识库和一份问答数据集，从问答数据�
 
 ### 2.测评结果  Benchmark Results
 
-#### 2.1 模型表现分析  Analysis of Model Performance
+#### 2.1 模型评测指标
 
-    模型有5种不同的方式做任务，分别是使用预训练模型直接做下游任务微调、PET、RoBERTa为基础的Ptuning方式、GPT类模型为基础的Ptuning方式、
-    使用RoBERTa或GPT做零样本学习。
-    
+我们采用业界常用的F1-score 以及完全匹配（Exact Match下简称EM）来作为模型的评测指标
+
+#### 2.2 模型表现分析  Analysis of Model Performance
+
+    两个baseline都使用预训练模型直接做下游任务微调 一个为bert-base-chinese 另一个为chinese-roberta-wwm-ext-large
     我们发现：
-    1）模型潜力：最好的模型表现（54.34分）远低于人类的表现（82.49分），即比人类低了近30分。说明针对小样本场景，模型还有很大的潜力；
-    2）新的学习范式：在小样本场景，新的学习方式（PET,Ptuning）的效果以较为明显的差距超过了直接调优的效果。
-       如在通用的基础模型（RoBERTa）下，PET方式的学习比直接下游任务微调高了近8个点。
-    3）零样本学习能力：在没有任何数据训练的情况下，零样本学习在有些任务上取得了较好的效果。如在119个类别的分类任务中，模型在没有训练的情况下
-    取得了27.7的分数，与直接下游任务微调仅相差2分，而随机猜测的话仅会获得1%左右的准确率。这种想象在在67个类别的分类任务csldcp中也有表现。
-
-#### 2.2 任务分析  Analysis of Tasks 
-    我们发现，在小样本学习场景：
-    不同任务对于人类和模型的难易程度相差较大。如wsc指代消解任务，对于人类非常容易（98分），但对于模型却非常困难（50分左右），只是随机猜测水平；
-    而有些任务对于人类比较困难，但对于模型却不一定那么难。如csldcp有67个类别，人类只取得了及格的水平，但我们的基线模型PET在初步的实验中
-    就取得了56.9的成绩。我们可以预见，模型还有不少进步能力。
+    1）参照过往工作，两个模型的F1和EM分数都属于中等水平 说明对于中文KBQA领域，模型还有很大的发展空间
+    2）模型的效果会对下游任务分数有所提升
 
 ## KgCLUE有什么特点
 1、KBQA利用的是结构化的知识，其数据来源决定了适合回答what，when 等事实性问题。
@@ -125,58 +100,47 @@ KBQA任务即为给定一份知识库和一份问答数据集，从问答数据�
 
 
 ## 基线模型及运行
-    目前支持4类代码：直接fine-tuning、PET、Ptuning、GPT
     
-    直接fine-tuning: 
-        一键运行.基线模型与代码
-        1、克隆项目 
-           git clone https://github.com/CLUEbenchmark/FewCLUE.git
-        2、进入到相应的目录
-           分类任务  
-               例如：
-               cd FewCLUE/baseline/models_tf/fine_tuning/bert/
-        3、运行对应任务的脚本(GPU方式): 会自动下载模型并开始运行。
-           bash run_classifier_multi_dataset.sh
-           计算8个任务cecmmnt tnews iflytek ocnli csl cluewsc bustm csldcp，每个任务6个训练集的训练模型结果
-           结果包括验证集和测试集的准确率，以及无标签测试集的生成提交文件
+​    bert-base-chinese 版本
 
-
-​      
-​    PET/Ptuning/GPT:
 ​        环境准备：
-​          预先安装Python 3.x(或2.7), Tesorflow 1.14+, Keras 2.3.1, bert4keras。
-​          需要预先下载预训练模型：chinese_roberta_wwm_ext，并放入到pretrained_models目录下
+​          预先安装Python 3.x, pytorch version >=1.2.0, transformers versoin 2.0。
+​          需要预先下载预训练模型：bert-base-chinese，并放入到config目录下（这个文件夹）
+        <a href='https://huggingface.co/bert-base-chinese'> bert-base-chinese</a>
 ​        
 ​        运行：
-​        1、进入到相应的目录，运行相应的代码。以ptuning为例：
-​           cd ./baselines/models_keras/ptuning
-​        2、运行代码
-​           python3 ptuning_iflytek.py
 
-Zero-shot roberta版
+​        1、进入到相应的目录，运行相应的代码：
+```
+​           cd ./baseline/bert
+```
+​        2、运行代码
+```
+​           python3 NER.py 训练NER的模型
+           python3 SIM.py 训练相似度的模型
+           python3 test_kbqa.py 测试kbqa
+```
+
+chinese-roberta-wwm-ext-large模型：
 ```
 环境准备：
     预先安装Python 3.x(或2.7), Tesorflow 1.14+, Keras 2.3.1, bert4keras。
-    需要预先下载预训练模型：chinese_roberta_wwm_ext，并放入到pretrained_models目录下
-
-运行：
-1、在FewClue根目录运行脚本：
-bash ./baselines/models_keras/zero_shot/roberta_zeroshot.sh [iflytek\tnews\eprstmt\ocnli...]
+    需要预先下载预训练模型：chinese_roberta_wwm_ext-large，并放入到ModelParams目录下
 ```
+运行：
 
-<a href='https://github.com/CLUEbenchmark/FewCLUE/blob/main/baselines/models_keras/gpt/readme.md'>Zero-shot gpt版</a>
-
-1. 模型下载：    
-    下载chinese_roberta_wwm_ext模型（运行gpt模型时，需要其中的vocab.txt文件，可只下载该文件）和
-   <a href='https://github.com/huawei-noah/Pretrained-Language-Model/tree/master/NEZHA-Gen-TensorFlow'> Chinese GPT模型</a>到pretrained_models目录下。
-
-1. 运行方式：
-    ```
-    cd baselines/models_keras/gpt
-    # -z 表示零样本学习，-t 表示不同任务名称，可替换为eprstmt,bustm,ocnli,csldcp,tnews,wsc,ifytek,csl
-    python run_gpt.py -t chid -z # 运行chid任务，并使用零样本学习的方式
-    ```
-
+1、进入到相对应的目录：
+```
+cd ./baseline/RoBERTa-wwm-large
+```
+2、运行代码
+```
+./run_ner.sh
+./terminal_ner.sh
+python3 args.py
+python3 run_similarity.py
+python3 kbqa_test.py
+```
 
 ## 问题 Question
     1. 问：测试系统，什么时候开发？
@@ -192,6 +156,7 @@ bash ./baselines/models_keras/zero_shot/roberta_zeroshot.sh [iflytek\tnews\eprst
 
 ## 引用 Reference
 
+    正在添加中
 
 ## License
 
