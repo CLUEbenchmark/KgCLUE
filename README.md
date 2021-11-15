@@ -72,7 +72,7 @@ KBQA任务即为给定一份知识库和一份问答数据集，从问答数据�
 
 ### 问答数据集描述
 
-   <img src="https://github.com/CLUEbenchmark/FewCLUE/blob/main/resources/img/qa.png"  width="100%" height="100%" />  
+   <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/qa.png"  width="100%" height="100%" />  
 
 问答数据集为json格式，每行为一条问答对，问题是one-hop问题，即答案为知识库中的一条三元组。数据格式如下，其中id为问答对索引，quetion为问题，answer为答案，来自知识库，以' ||| '分割。
 
