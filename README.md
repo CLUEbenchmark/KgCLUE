@@ -124,27 +124,12 @@ KgCLUE: 大规模基于知识图谱的问答
 
 
 ## 基线模型及运行
-    目前支持4类代码：直接fine-tuning、PET、Ptuning、GPT
     
-    直接fine-tuning: 
-        一键运行.基线模型与代码
-        1、克隆项目 
-           git clone https://github.com/CLUEbenchmark/FewCLUE.git
-        2、进入到相应的目录
-           分类任务  
-               例如：
-               cd FewCLUE/baseline/models_tf/fine_tuning/bert/
-        3、运行对应任务的脚本(GPU方式): 会自动下载模型并开始运行。
-           bash run_classifier_multi_dataset.sh
-           计算8个任务cecmmnt tnews iflytek ocnli csl cluewsc bustm csldcp，每个任务6个训练集的训练模型结果
-           结果包括验证集和测试集的准确率，以及无标签测试集的生成提交文件
-
-
-​      
-​    PET/Ptuning/GPT:
+​    Bert-pytorch 版本
 ​        环境准备：
-​          预先安装Python 3.x(或2.7), Tesorflow 1.14+, Keras 2.3.1, bert4keras。
-​          需要预先下载预训练模型：chinese_roberta_wwm_ext，并放入到pretrained_models目录下
+​          预先安装Python 3.x, pytorch version >=1.2.0, transformers versoin 2.0。
+​          需要预先下载预训练模型：bert-base-chinese，并放入到config目录下
+        <a href='https://huggingface.co/bert-base-chinese'> bert-base-chinese</a>
 ​        
 ​        运行：
 ​        1、进入到相应的目录，运行相应的代码。以ptuning为例：
