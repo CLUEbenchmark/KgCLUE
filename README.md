@@ -48,9 +48,8 @@ KBQA任务即为给定一份知识库和一份问答数据集，从问答数据�
 | :----:| :----:  |:----:  |:----:  | 
 |   3137356    |    246380     |   4143     |   23022248     |
 
-  知识库来源于百度百科，由百科搜索页面的infobox中抽取的三元组构成。
+  知识库来源于百科数据，由百科搜索页面的事实性三元组构成。
 
-<img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/infobox.png"  width="100%" height="100%" /> 
 
 ### 知识库描述
 
@@ -193,23 +192,6 @@ bash ./baselines/models_keras/zero_shot/roberta_zeroshot.sh [iflytek\tnews\eprst
 
 ## 引用 Reference
 
-1、<a href='https://arxiv.org/abs/2005.14165'>GPT3: Language Models are Few-Shot Learners</a>
-
-2、<a href='https://arxiv.org/pdf/2009.07118.pdf'>PET: It's Not Just Size That Matters: Small Language Models Are Also Few-Shot Learners</a>
-
-3、<a href='https://kexue.fm/archives/7764'>必须要GPT3吗？不，BERT的MLM模型也能小样本学习</a>
-
-4、<a href="https://arxiv.org/pdf/2012.15723.pdf">LM_BFF: Making Pre-trained Language Models Better Few-shot Learners</a>
-
-5、<a href='https://zhuanlan.zhihu.com/p/341609647'>GPT-3的最强落地方式？陈丹琦提出小样本微调框架LM-BFF，比普通微调提升11%</a>
-
-6、<a href='https://arxiv.org/pdf/2103.10385.pdf'>论文：GPT Understands, Too</a>
-
-7、<a href='https://kexue.fm/archives/8295'>文章：P-tuning：自动构建模版，释放语言模型潜能</a>
-
-8、<a href='https://arxiv.org/abs/2103.11955'>ADAPET: Improving and Simplifying Pattern Exploiting Training</a>
-
-9、<a href='https://arxiv.org/abs/2104.14690'>EFL:Entailment as Few-Shot Learner</a>
 
 ## License
 
