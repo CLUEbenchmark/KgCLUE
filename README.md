@@ -127,7 +127,12 @@ KBQA任务即为给定一份知识库和一份问答数据集，从问答数据�
 ## 代码简介
 下面简单接受下该任务的baseline的构建思路，但并不对任务数据进行详细介绍，如对任务数据不明白，请返回[数据集介绍](#数据集介绍)部分
 
+bert-base-chinese版本
 
+NER阶段： 我们使用BertForTokenClassification + crf来做NER任务，如图所示用于识别出问题中的实体
+<img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/BertForTokenClassification+crf.png"  width="100%" height="100%" /> 
+SIM阶段：我们使用BertForSequenceClassification，用于句子分类。把问题和属性拼接到一起，用于判断问题要问的是不是这个属性
+<img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/BertForSequenceClassification.png"  width="100%" height="100%" /> 
 
 ## 基线模型及运行
     
