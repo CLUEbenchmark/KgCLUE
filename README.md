@@ -23,7 +23,6 @@ KgCLUE: 大规模基于知识图谱的问答
  KBQA利可以用图谱丰富的语义关联信息，能够深入理解用户问题并给出答案，近年来吸引了学术界和工业界的广泛关注。KBQA主要任务是将自然语言问题（NLQ）通过不同方法映射到结构化的查询，并在知识图谱中获取答案。
  
  KgCLUE：中文KBQA测评基准，基于CLUE的积累和经验，并结合KBQA的特点和近期的发展趋势，精心设计了该测评，希望可以促进中文领域上KBQA领域更多的研究、应用和发展。
-  
 
 ### UPDATE:
   
@@ -46,10 +45,23 @@ KBQA任务即为给定一份知识库和一份问答数据集，从问答数据�
 
 知识库可通过<a href="https://pan.baidu.com/s/1NyKw2K5bLEABWtzbbTadPQ">百度云</a>，提取码:nqbq，或着<a href='https://drive.google.com/file/d/1UufUy4_4GK63wmbFnxHu3no7oP_5AOJy/view?usp=sharing'>Google云</a>下载。
 
-知识库基本信息详见[knowledge/README](/knowledge/README.md)。
+### 知识库统计信息
+| 实体数量   | 关系数量     | 高频关系(>100)  |三元组数量| 
+| :----:| :----:  |:----:  |:----:  | 
+|   3137356    |    246380     |   4143     |   23022248     |
+
+  知识库来源于百科数据，由百科搜索页面的事实性三元组构成。
 
 
-### 问答数据集介绍
+### 知识库描述
+
+  <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/knowledge_info.png"  width="100%" height="100%" />   
+
+
+    知识库中数据存储格式如上，每一行是一个三元组，格式为<头实体，关系，尾实体>，每列之间以'\t'分隔，其中头实体后的括号项为该实体的消歧项。
+
+
+### 问答数据集统计信息
 
 | Corpus   | Train     | Dev  |Test Public| Test Private |
 | :----:| :----:  |:----:  |:----:  |:----:  |
@@ -59,6 +71,11 @@ KBQA任务即为给定一份知识库和一份问答数据集，从问答数据�
     问答数据集为one-hop数据，总共包含25000条问答对。
     数据集分为4份，1份训练集；1份验证集；1份公开测试集，用于测试；1份私有测试集，用于提交，不公开。
 
+### 问答数据集描述
+
+   <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/qa.png"  width="100%" height="100%" />  
+
+问答数据集为json格式，每行为一条问答对，问题是one-hop问题，即答案为知识库中的一条三元组。数据格式如下，其中id为问答对索引，quetion为问题，answer为答案，来自知识库，以' ||| '分割。
 
 
 ## 实验结果
