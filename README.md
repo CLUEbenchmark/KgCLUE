@@ -138,7 +138,7 @@ chinese-roberta-wwm-ext-large模型：
 我们同样适用NER+SIM的思路
 但在NER阶段采用了BERT+LSTM+CRF用于识别问题中的实体。输入是wordPiece tokenizer得到的tokenid，进入Bert预训练模型抽取丰富的文本特征得到batch_size * max_seq_len * emb_size的输出向量，输出向量过Bi-LSTM从中提取实体识别所需的特征，得到batch_size * max_seq_len * (2*hidden_size)的向量，最终进入CRF层进行解码，计算最优的标注序列。
 如图所示
-<img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/Bert+Bilstm+CRF.png"  width="100%" height="100%" /> 
+<img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/Bert-Bilstm-CRF.png"  width="100%" height="100%" /> 
 
 SIM阶段采用BERT作二分类模型
 
