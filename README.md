@@ -96,17 +96,14 @@ KBQA任务即为给定一份知识库和一份问答数据集，从问答数据�
 
 ## 实验分析
 
-### 1.人类水平  Human Performance
 
-    
+### 1.测评结果  Benchmark Results
 
-### 2.测评结果  Benchmark Results
-
-#### 2.1 模型评测指标
+#### 1.1 模型评测指标
 
 我们采用业界常用的F1-score 以及完全匹配（Exact Match下简称EM）来作为模型的评测指标
 
-#### 2.2 模型表现分析  Analysis of Model Performance
+#### 1.2 模型表现分析  Analysis of Model Performance
 
     两个baseline都使用预训练模型直接做下游任务微调 一个为bert-base-chinese 另一个为chinese-roberta-wwm-ext-large
     我们发现：
@@ -198,17 +195,3 @@ python3 kbqa_test.py
       答：发送邮件到 CLUEbenchmark@163.com，标题为：参与KgCLUE课题，并介绍一下你的研究。
 
 
-## 引用 Reference
-
-    正在添加中
-
-## License
-
-    正在添加中
-## 引用
-    {FewCLUE,
-      title={FewCLUE: A Chinese Few-shot Learning Evaluation Benchmark},
-      author={Liang Xu, Xiaojing Lu, Chenyang Yuan, Xuanwei Zhang, Huilin Xu, Hu Yuan, Guoao Wei, Xiang Pan, Xin Tian, Libo Qin, Hu Hai},
-      year={2021},
-      howpublished={\url{https://arxiv.org/abs/2107.07498}},
-    }
