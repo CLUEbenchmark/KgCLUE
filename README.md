@@ -199,7 +199,7 @@ python3 kbqa_test.py
        答：问题原样本属性为正，再随机从样本中其他属性抽5个设为负。
     3. 问：什么是属性？
        答：三元组中间那列数据，如图所示
-  <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/attribute.png"  width="100%" height="100%" /> 
+  <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/attribute.png"  width="100%" height="100%" /> 
 
 
 ## 贡献与参与
