@@ -141,13 +141,18 @@ SIM阶段采用BERT作二分类模型
 
 
 ## 基线模型及运行
-    
+数据处理
+```：
+1、运行baseline/dataProcessing/NERdata.py 处理NER数据
+2、运行baseline/dataProcessing/SIMdata.py 处理SIM数据
+```   
 ​    bert-base-chinese模型：
 
 ​        环境准备：
 ​          预先安装Python 3.x, pytorch version >=1.2.0, transformers versoin 2.0。
 ​          需要预先下载预训练模型：bert-base-chinese，并放入到config目录下（这个文件夹）
         <a href='https://huggingface.co/bert-base-chinese'> bert-base-chinese</a>
+          需要将第一步数据处理好的数据放入input文件夹
 ​        
 ​        运行：
 
@@ -167,6 +172,7 @@ chinese-roberta-wwm-ext-large模型：
 环境准备：
     预先安装Python 3.x(或2.7), Tesorflow 1.14+, Keras 2.3.1, bert4keras。
     需要预先下载预训练模型：chinese_roberta_wwm_ext-large，并放入到ModelParams目录下
+    需要将预先处理好的数据放入data文件夹中
 ```
 运行：
 
