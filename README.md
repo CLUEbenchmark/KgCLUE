@@ -2,7 +2,7 @@
 
 KgCLUE: 大规模基于知识图谱的问答
 
-我们制作了一个简单的demo，请<a href="http://www.cluebenchmarks.com:5000">点击</a>体验
+我们制作了一个简单的demo，请<a href="http://www.cluebenchmarks.com:5000">点击此处</a>体验
 
 
 ## 内容导引
@@ -12,7 +12,7 @@ KgCLUE: 大规模基于知识图谱的问答
 | [任务描述和统计](#任务描述和统计) | 介绍任务的基本信息 |
 | [数据集介绍](#数据集介绍) | 介绍数据集及示例 |
 | [实验结果](#实验结果) | 针对各种不同方法，在KgCLUE上的实验对比 |
-| [实验分析](#实验分析) | 对人类表现、模型能力和任务进行分析 |
+| [实验分析](#实验分析) | 对模型能力进行分析 |
 | [KgCLUE有什么特点](#KgCLUE有什么特点) | 特点介绍 |
 | [基线模型及运行](#基线模型及运行) | 支持多种基线模型 |
 
@@ -199,7 +199,7 @@ python3 kbqa_test.py
        答：问题原样本属性为正，再随机从样本中其他属性抽5个设为负。
     3. 问：什么是属性？
        答：三元组中间那列数据，如图所示
-       <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/attribute.png"  width="100%" height="100%" /> 
+  <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/attribute.png"  width="100%" height="100%" /> 
 
 
 ## 贡献与参与
