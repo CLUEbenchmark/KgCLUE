@@ -192,6 +192,26 @@ python3 run_similarity.py
 python3 kbqa_test.py
 ```
 
+
+chinese-roberta-wwm-ext模型：
+```
+环境准备：
+    预先安装Python 3.x(或2.7), Tesorflow 1.14+
+    需要预先下载预训练模型：chinese_roberta_wwm_ext_L-12_H-768_A-12，并放入到chinese_roberta_wwm_ext_L-12_H-768_A-12目录下
+```
+运行：
+
+1、进入到相对应的目录：
+```
+cd ./baseline/RoBERTa-wwm-ext
+```
+2、运行代码
+```
+训练实体识别
+./NER/ner_train.py
+训练文本相似度分类
+./SIM/sim_train.py
+```
 ## 问题 Question
     1. 问：测试系统，什么时候开发？
        答：测评系统在11月15日后才会开放。
