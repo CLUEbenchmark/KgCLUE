@@ -236,6 +236,29 @@ cd ./baseline/RoBERTa-wwm-ext
 训练文本相似度分类
 ./SIM/sim_train.py
 ```
+
+#### 4）如何测试：
+1、进入到相对应的目录：
+```
+cd ./baseline/Evaluation
+```
+2、修改下列指令：
+```
+python run_squad.py  \
+    --model_type bert   \
+    --model_name_or_path BERTmodel  \
+    --output_dir model \
+    --data_dir data/  \
+    --predict_file    \
+    --do_eval   \
+    --version_2_with_negative \
+    --do_lower_case  \
+    --per_gpu_eval_batch_size 12   \
+    --max_seq_length 384   \
+    --doc_stride 128
+```
+3、运行上述指令
+
 ## 问题 Question
     1. 问：测试系统，什么时候开发？
        答：测评系统在2021年12月1日后开放。
