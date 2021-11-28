@@ -63,7 +63,7 @@ KBQA任务即为给定一份知识库和一份问答数据集，从问答数据�
 ### 知识库描述
 
   <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/knowledge_info.png"  width="85%" height="85%" />   
-  <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/kg_example2.jpeg"  width="85%" height="85%" />   
+  <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/kg_example2.jpeg"  width="95%" height="95%" />   
 
 
     知识库中数据存储格式如上，每一行是一个三元组，格式为<头实体，关系，尾实体>，每列之间以'\t'分隔，
@@ -161,12 +161,13 @@ F1-score：F1-score是分类问题的常用指标，广泛用于 QA。 当我们
 从任务设定，广泛的数据集，多个有代表性的基线模型及效果对比，一键运行脚本，到测评系统等完整的基础设施。
 
 ## 基线模型及运行
-#### 数据处理
+### 数据处理
 ```：
 1、运行baseline/dataProcessing/NERdata.py 处理NER数据
 2、运行baseline/dataProcessing/SIMdata.py 处理SIM数据
-```   
-#### bert-base-chinese模型：
+``` 
+####  模型  
+#### 1）bert-base-chinese模型：
 
 ​        环境准备：
 ​          预先安装Python 3.x, pytorch version >=1.2.0, transformers versoin 2.0。
@@ -187,7 +188,7 @@ F1-score：F1-score是分类问题的常用指标，广泛用于 QA。 当我们
            python3 test_kbqa.py 测试kbqa
 ```
 
-#### chinese-roberta-wwm-ext-large模型：
+#### 2）chinese-roberta-wwm-ext-large模型：
 ```
 环境准备：
     预先安装Python 3.x(或2.7), Tesorflow 1.14+, Keras 2.3.1, bert4keras。
@@ -210,7 +211,7 @@ python3 kbqa_test.py
 ```
 
 
-#### chinese-roberta-wwm-ext模型：
+#### 3）chinese-roberta-wwm-ext模型：
 ```
 环境准备：
     预先安装Python 3.x(或2.7), Tesorflow 1.14+
@@ -252,7 +253,7 @@ cd ./baseline/RoBERTa-wwm-ext
     
     3.如何交流？
      提交你的issue；加QQ群（群号:836811304）；或加入微信群
-   <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/kgcluegroup.jpeg"  width="65%" height="86%" /> 
+   <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/kgcluegroup.jpeg"  width="65%" height="65%" /> 
 
 
 
