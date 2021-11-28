@@ -117,10 +117,15 @@ F1-score：F1-score是分类问题的常用指标，广泛用于 QA。 当我们
 #### 1.2 模型表现分析  Analysis of Model Performance
 
 两个baseline都使用预训练模型直接做下游任务微调 一个为bert-base-chinese 另一个为chinese-roberta-wwm-ext-large
+
 我们发现：
+
 1）参照过往工作，两个模型的F1和EM分数都属于中等水平 说明对于中文KBQA领域，模型还有很大的发展空间
+
 2）模型的效果会对下游任务分数有所提升
-3) 在NER和similarity的阶段的效果影响结果较大，参考过往工作，我们的baseline模型两阶段分数处于中下等水平，还是有很大的发展空间 
+
+3）在NER和similarity的阶段的效果影响结果较大，参考过往工作，我们的baseline模型两阶段分数处于中下等水平，还是有很大的发展空间 
+
 
 ## KgCLUE有什么特点
 1、KBQA利用的是结构化的知识，其数据来源决定了适合回答what，when 等事实性问题。
