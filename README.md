@@ -18,6 +18,8 @@ KgCLUE: 大规模知识图谱的问答
 | [基线模型及运行](#基线模型及运行) | 支持多种基线模型 |
 | [贡献与参与](#贡献与参与) | 如何参与项目或反馈问题|
 
+  <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/kgclue1.0.gif"  width="75%" height="75%" />   
+
 
 ## 简介
  KBQA（Knowledge Base Question Answering），即给定自然语言问题，通过对问题进行语义理解和解析，进而利用知识库进行查询、推理得出答案。
@@ -253,7 +255,7 @@ cd ./baseline/RoBERTa-wwm-ext
     
     3.如何交流？
      提交你的issue；加QQ群（群号:836811304）；或加入微信群
-   <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/kgcluegroup.jpeg"  width="65%" height="65%" /> 
+   <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/kgcluegroup.jpeg"  width="50%" height="50%" /> 
 
 
 
