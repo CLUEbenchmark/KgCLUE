@@ -110,7 +110,7 @@ KBQA任务即为给定一份知识库和一份问答数据集，从问答数据�
 我们采用业界常用的F1-score 以及完全匹配（Exact Match下简称EM）来作为模型的评测指标
 
 F1-score：F1-score是分类问题的常用指标，广泛用于 QA。 当我们同样关心精度和召回率时用F1就十分合适。 在这种情况下，它是针对预测中的单个单词与真实答案中的单词进行计算的。 预测和真值之间的共享词数是F1分数的基础：精度是预测中共享词的数量与总词数的比值，召回率是共享词数的比值 到基本事实中的单词总数。
-<img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/f1-score.png"  width="100%" height="100%" /> 
+<img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/f1score.png"  width="100%" height="100%" /> 
 
 完全匹配(Exact Match)：对于每个问题+答案对，如果模型预测的答案的字符与正确答案（之一）的字符完全匹配，则 EM = 1，否则 EM = 0。这是一个严格的有或无的指标； 如有单字错误仍然得分为 0。在针对负面示例进行评估时，如果模型预测了任何文本，它会自动为该示例得分为 0。
 
