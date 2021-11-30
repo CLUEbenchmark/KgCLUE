@@ -92,6 +92,7 @@ KBQA任务即为给定一份知识库和一份问答数据集，从问答数据�
 | :----:| :----:  |:----:  |
 | Bert-base-chinese |  81.8      |   79.1   |
 | chinese-roberta-wwm-ext-large |  82.6     |  80.6    |
+| chinese-roberta-wwm-ext |  60.6        |  60.1    |
 
 | Model   | NER（F1-score）    | SIM(F1-score)  |
 | :----:| :----:  |:----:  |
