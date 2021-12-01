@@ -90,6 +90,7 @@ KBQA任务即为给定一份知识库和一份问答数据集，从问答数据�
 
 ## 实现思路
 下面简单接受下该任务的baseline的构建思路，但并不对任务数据进行详细介绍，如对任务数据不明白，请返回[数据集介绍](#数据集介绍)部分
+以下图片仅为思路参考
 
 bert-base-chinese版本
 
@@ -101,7 +102,7 @@ bert-base-chinese版本
 我们使用BertForSequenceClassification，用于句子分类。把问题和属性拼接到一起，用于判断问题要问的是不是这个属性
 <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/BertForSequenceClassification.png"  width="85%" height="85%" /> 
 
-#### chinese-roberta-wwm-ext-large模型
+#### chinese-roberta-wwm-ext-large以及chinese-roberta-wwm-ext模型
 我们同样适用NER+SIM的思路
 但在NER阶段采用了BERT+LSTM+CRF用于识别问题中的实体。输入是wordPiece tokenizer得到的tokenid，进入Bert预训练模型抽取丰富的文本特征得到batch_size * max_seq_len * emb_size的输出向量，输出向量过Bi-LSTM从中提取实体识别所需的特征，得到batch_size * max_seq_len * (2*hidden_size)的向量，最终进入CRF层进行解码，计算最优的标注序列。
 如图所示
@@ -117,13 +118,13 @@ SIM阶段采用BERT作二分类模型
 | :----:| :----:  |:----:  |
 | Bert-base-chinese |  81.8      |   79.1   |
 | chinese-roberta-wwm-ext-large |  82.6     |  80.6    |
-| chinese-roberta-wwm-ext |  60.6        |  60.1    |
+| chinese-roberta-wwm-ext |  82.3        |  80.2    |
 
 | Model   | NER（F1-score）    | SIM(F1-score)  |
 | :----:| :----:  |:----:  |
 | Bert-base-chinese |  76.1      |   74.8   |
 | chinese-roberta-wwm-ext-large |  81.3     |  76.93    |
-| chinese-roberta-wwm-ext |  84.1     |  86.2   |
+| chinese-roberta-wwm-ext |  80.4     |  75.5   |
 
 
 ## 实验分析
@@ -142,15 +143,17 @@ F1-score：F1-score是分类问题的常用指标，广泛用于 QA。 当我们
 
 #### 1.2 模型表现分析  Analysis of Model Performance
 
-两个baseline都使用预训练模型直接做下游任务微调 一个为bert-base-chinese 另一个为chinese-roberta-wwm-ext-large
+baseline都使用预训练模型直接做下游任务微调 bert-base-chinese，chinese-roberta-wwm-ext-large以及chinese-roberta-wwm-ext
 
 我们发现：
 
-1）参照过往工作，两个模型的F1和EM分数都属于中等水平 说明对于中文KBQA领域，模型还有很大的发展空间
+1）参照过往工作，三个个模型的F1和EM分数都属于中等水平 说明对于中文KBQA领域，模型还有很大的发展空间
 
 2）模型的效果会对下游任务分数有所提升
 
 3）在NER和similarity的阶段的效果影响结果较大，参考过往工作，我们的baseline模型两阶段分数处于中下等水平，还是有很大的发展空间 
+
+4）我们曾使用过不同难度的数据训练以及测试模型，发现数据处理对分数的影响较大，或许可以设法通过难样本挖掘构建难样本进行更有效训练
 
 
 ## KgCLUE有什么特点
