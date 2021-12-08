@@ -17,7 +17,6 @@ KgCLUE: 大规模知识图谱的问答
 | [KgCLUE有什么特点](#KgCLUE有什么特点) | 特点介绍 |
 | [基线模型及运行](#基线模型及运行) | 支持多种基线模型 |
 | [排行榜及提交](#排行榜及提交) | 排行榜及提交样例 |
-
 | [贡献与参与](#贡献与参与) | 如何参与项目或反馈问题|
 
   <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/kgclue1.0.gif"  width="75%" height="75%" />   
@@ -173,11 +172,11 @@ baseline都使用预训练模型直接做下游任务微调 bert-base-chinese，
 
 #### 提交说明
 训练端到端或非端到端模型，在非公开测试集上<a href="./qa_data/test.json">test.json</a>进行预测，
-得到kgclue_predict.json并压缩，得到kgclue_predict.zip；然后提交到<a href="https://www.cluebenchmarks.com">CLUE测评系统</a>
+生成kgclue_predict.json并压缩，得到kgclue_predict.zip；然后提交到<a href="https://www.cluebenchmarks.com">CLUE测评系统</a>
 
 <a href="./kgclue_submit_examples/kgclue_predict.json">提交样例</a>
 
-<a href="https://www.cluebenchmarks.com/kgclue.html">排行榜</a>
+<a href="https://www.cluebenchmarks.com/kgclue.html" target="_blank">排行榜</a>
 
 ## 基线模型及运行
 ### 数据处理
