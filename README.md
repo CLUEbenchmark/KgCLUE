@@ -1,6 +1,6 @@
 # KgCLUE
 
-KgCLUE: 大规模知识图谱的问答
+KgCLUE: 大规模中文开源知识图谱问答
 
 在线DEMO<a href="https://www.cluebenchmarks.com/KgCLUEdemo">点击此处</a>体验
 
