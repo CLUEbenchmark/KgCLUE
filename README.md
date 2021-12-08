@@ -174,7 +174,7 @@ baseline都使用预训练模型直接做下游任务微调 bert-base-chinese，
 训练端到端或非端到端模型，在非公开测试集上<a href="./qa_data/test.json">test.json</a>进行预测，
 生成kgclue_predict.json并压缩，得到kgclue_predict.zip；然后提交到<a href="https://www.cluebenchmarks.com" target="_blank">CLUE测评系统</a>
 
-<a href="./kgclue_submit_examples/kgclue_predict.json">提交样例</a>
+<a href="./resources/kgclue_submit_examples/kgclue_predict.json">提交样例</a>
 
 <a href="https://www.cluebenchmarks.com/kgclue.html" target="_blank">排行榜</a>
 
