@@ -2,7 +2,7 @@
 
 KgCLUE: 大规模知识图谱的问答
 
-在线DEMO<a href="http://www.cluebenchmarks.com:5000">点击此处</a>体验
+在线DEMO<a href="https://www.cluebenchmarks.com/KgCLUEdemo">点击此处</a>体验
 
 
 ## 内容导引
@@ -16,6 +16,8 @@ KgCLUE: 大规模知识图谱的问答
 | [实验分析](#实验分析) | 对模型能力进行分析 |
 | [KgCLUE有什么特点](#KgCLUE有什么特点) | 特点介绍 |
 | [基线模型及运行](#基线模型及运行) | 支持多种基线模型 |
+| [排行榜及提交](#排行榜及提交) | 排行榜及提交样例 |
+
 | [贡献与参与](#贡献与参与) | 如何参与项目或反馈问题|
 
   <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/kgclue1.0.gif"  width="75%" height="75%" />   
@@ -166,6 +168,16 @@ baseline都使用预训练模型直接做下游任务微调 bert-base-chinese，
 
 此外，我们提供KBQA测评完善的基础设施。
 从任务设定，广泛的数据集，多个有代表性的基线模型及效果对比，一键运行脚本，到测评系统等完整的基础设施。
+
+## 排行榜及提交
+
+#### 提交说明
+训练端到端或非端到端模型，在非公开测试集上<a href="./qa_data/test.json">test.json</a>进行预测，
+得到kgclue_predict.json并压缩，得到kgclue_predict.zip；然后提交到<a href="https://www.cluebenchmarks.com">CLUE测评系统</a>
+
+<a href="./kgclue_submit_examples/kgclue_predict.json">提交样例</a>
+
+<a href="https://www.cluebenchmarks.com/kgclue.html">排行榜</a>
 
 ## 基线模型及运行
 ### 数据处理

@@ -81,5 +81,5 @@ class NerEval(object):
 if __name__ == '__main__':
     Ner_MODEL_PATH = "./model"
     ner_eval = NerEval(Ner_MODEL_PATH)
-    ner_eval.do_eval(data_files=["../raw_data/test_public.json", "../raw_data/eval.json", "../raw_data/train.json"])
-# "../raw_data/train.json", "../raw_data/eval.json",
+    ner_eval.do_eval(data_files=["../raw_data/test_public.json", "../raw_data/dev.json", "../raw_data/train.json"])
+# "../raw_data/train.json", "../raw_data/dev.json",

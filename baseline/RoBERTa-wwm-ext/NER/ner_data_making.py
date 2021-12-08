@@ -176,7 +176,7 @@ class NerDataMaking(object):
 
 
 if __name__ == '__main__':
-    INPUT_DATA_PATHS = ["raw_data/train.json","raw_data/eval.json","raw_data/test_public.json"]
+    INPUT_DATA_PATHS = ["raw_data/train.json","raw_data/dev.json","raw_data/test_public.json"]
     OUTPUT_DIR = "data"
     ner_data_make = NerDataMaking(do_lower_case=True, max_seq_length=config.max_seq_length)
     ner_data_make.input2output(INPUT_DATA_PATHS, OUTPUT_DIR)

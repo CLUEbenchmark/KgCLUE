@@ -81,7 +81,7 @@ if __name__ == '__main__':
     MODEL_PATH = "../NER/model"
     ee = EntityExtract(MODEL_PATH)
     ff = open("./out.txt", 'w', encoding='utf-8')
-    with open(r"C:\Users\11943\Documents\GitHub\RoBERTa-wwm-ext\raw_data\eval.json", "r", encoding='utf-8') as f:
+    with open(r"C:\Users\11943\Documents\GitHub\RoBERTa-wwm-ext\raw_data\dev.json", "r", encoding='utf-8') as f:
         while True:
             line = f.readline()
             if line:

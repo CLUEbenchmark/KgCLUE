@@ -194,7 +194,7 @@ class SimDataMaking(object):
 
 
 if __name__ == '__main__':
-    INPUT_DATA_PATHS = ["../raw_data/train.json", "../raw_data/eval.json", "../raw_data/test_public.json"]
+    INPUT_DATA_PATHS = ["../raw_data/train.json", "../raw_data/dev.json", "../raw_data/test_public.json"]
     # INPUT_DATA_PATHS = ["../raw_data/test_public.json"]
     OUTPUT_DIR = "data"
     attribute_path = "../raw_data/train.json"
