@@ -178,7 +178,8 @@ baseline都使用预训练模型直接做下游任务微调 bert-base-chinese，
 
 <a href="https://www.cluebenchmarks.com/kgclue.html" target="_blank">排行榜</a>
 
-## 基线模型及运行
+## 基线模型及运行 
+>我们提供了另一个代码库可以更简单方便的复现我们的效果https://github.com/CLUEbenchmark/KgCLUEbench
 ### 数据处理
 ```：
 1、运行baseline/dataProcessing/NERdata.py 处理NER数据
