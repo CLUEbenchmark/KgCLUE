@@ -51,14 +51,14 @@ KBQA任务即为给定一份知识库和一份问答数据集，从问答数据�
 
 ### 知识库介绍
 
-知识库可通过<a href="https://pan.baidu.com/s/1NyKw2K5bLEABWtzbbTadPQ">百度云</a>，提取码:nqbq，或着<a href='https://drive.google.com/file/d/1UufUy4_4GK63wmbFnxHu3no7oP_5AOJy/view?usp=sharing'>Google云</a>下载。
+知识库可通过<a href="https://pan.baidu.com/s/1bJgDGz0NjU1EtMjBWjQayw">百度云</a>，提取码:nhsb，或着<a href='https://drive.google.com/file/d/149y8vgO0B8IlS8_F_WAbsL9uptqsp8UI/view?usp=sharing'>Google云</a>下载。
 
 下载后，请将其放入knowledge文件夹中。
 
 ### 知识库（三元组）统计信息
 | 实体数量   | 关系数量     | 高频关系(>100)  |三元组数量| 
 | :----:| :----:  |:----:  |:----:  | 
-|   3121457    |    245838     |   4129     |   22884223     |
+|   3121457    |    245838     |   3833     |   20559652    |
 
   知识库来源于百科类数据，由百科类搜索页面的事实性三元组构成。
 
