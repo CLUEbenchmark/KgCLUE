@@ -51,7 +51,7 @@ KBQA任务即为给定一份知识库和一份问答数据集，从问答数据�
 
 ### 知识库介绍
 
-知识库可通过<a href="https://pan.baidu.com/s/1bJgDGz0NjU1EtMjBWjQayw">百度云</a>，提取码:nhsb，或着<a href='https://drive.google.com/file/d/149y8vgO0B8IlS8_F_WAbsL9uptqsp8UI/view?usp=sharing'>Google云</a>下载。
+知识库可通过<a href="https://pan.baidu.com/s/1bJgDGz0NjU1EtMjBWjQayw">百度云</a>，提取码:nhsb，或着<a href='https://drive.google.com/file/d/1tOSwVzr71uJjHbMZJd67yT8kEAc5ThqL/view?usp=sharing'>Google云</a>下载。
 
 下载后，请将其放入knowledge文件夹中。
 
