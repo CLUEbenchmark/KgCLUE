@@ -120,23 +120,17 @@ KBQA任务即为给定一份知识库和一份问答数据集，从问答数据�
 <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/BertForSequenceClassification.png"  width="85%" height="85%" /> 
 
 ## 基线模型及运行 
-
 ### 环境依赖
-1）NER模型：
-     
+1）NER模型：   
      python3.6+
      1.1.0 =< pytorch < 1.5.0, or 1.7.1
-    
 2）SIM模型
-
     python3.6+
     tensorflow 1.14+
-    bert4keras, 0.10.8
-    
+    bert4keras, 0.10.8 
 ### 如何运行
-
-    进入到ner_re的目录(cd baselines/ner_re)，然后循序执行以下1-2-3的命令。
-
+    进入到ner_re的目录(cd baselines/ner_re)；
+    然后顺序执行以下命令：1）训练NER模型；2）训练相似度模型；3）生成预测文件并提交。
 #### 1.NER模型(pytorch)
 ##### 1.0 下载预训练模型
  下载并将预训练模型(<a href='https://github.com/ymcui/Chinese-BERT-wwm#%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9E%8B%E4%B8%8B%E8%BD%BD'>chinese_rbt3_pytorch</a>）放入到prev_trained_model目录。
@@ -158,7 +152,6 @@ KBQA任务即为给定一份知识库和一份问答数据集，从问答数据�
     {"id": 0, "tag_seq": "O O O O B-NER I-NER I-NER O O O O O O", "entities": [["NER", 4, 6]]}
     {"id": 1, "tag_seq": "O O B-NER I-NER I-NER O O O O O O O O", "entities": [["NER", 2, 4]]}
     {"id": 2, "tag_seq": "O O B-NER I-NER I-NER I-NER I-NER I-NER I-NER O O O O O O O O", "entities": [["NER", 2, 8]]}
-
 #### 2.SIM（相似度）模型
 #####  2.1 生成相似度训练数据
 
@@ -177,7 +170,6 @@ KBQA任务即为给定一份知识库和一份问答数据集，从问答数据�
 ##### 测试单个输入的相似度（可选）
 
     python3 -u sim/predict.py
-
 #### 3. 生成预测文件并提交
 
     python3 -u submit/generate_submit_file.py
@@ -188,7 +180,7 @@ KBQA任务即为给定一份知识库和一份问答数据集，从问答数据�
     
    提交预测文件到<a href='www.CLUEbenchmarks.com'>测评系统</a>，并查看：<a href='https://www.cluebenchmarks.com/kgclue.html'>榜单效果</a>
 
-详细介绍见<a href='./baselines/ner_re/README.md'>./baselines/ner_re/README.md</a>
+基线模型详细介绍见：<a href='./baselines/ner_re/README.md'>./baselines/ner_re/README.md</a>
 
 
 ### 相关阅读

@@ -33,11 +33,9 @@
     sim: 相似度模型相关，数据生成、训练、预测
     submit:生成测试集上的预测文件
     output:训练模型后模型的checkponts等
-
+    
 ## 如何运行
-
     进入到ner_re的目录(cd baselines/ner_re)，然后循序执行以下1-2-3的命令。
-
 ### 1.NER模型(pytorch)
 #### 1.0 下载预训练模型
  下载并将预训练模型(<a href='https://github.com/ymcui/Chinese-BERT-wwm#%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9E%8B%E4%B8%8B%E8%BD%BD'>chinese_rbt3_pytorch（用于NER）</a>）放入到prev_trained_model目录
@@ -59,7 +57,6 @@
     {"id": 0, "tag_seq": "O O O O B-NER I-NER I-NER O O O O O O", "entities": [["NER", 4, 6]]}
     {"id": 1, "tag_seq": "O O B-NER I-NER I-NER O O O O O O O O", "entities": [["NER", 2, 4]]}
     {"id": 2, "tag_seq": "O O B-NER I-NER I-NER I-NER I-NER I-NER I-NER O O O O O O O O", "entities": [["NER", 2, 8]]}
-
 ### 2.SIM（相似度）模型
 ####  2.1 生成相似度训练数据
 
@@ -68,7 +65,6 @@
     其中，生成的相似度训练数据所在的目录为：./processed_data
    
    已经训练好的相似度(SIM)模型<a href='https://storage.googleapis.com/cluebenchmark/kgclue_models/RBT3_ner.zip'>下载</a>
-
 #### 2.2 训练SIM模型
 
     python3 -u sim/train.py
@@ -78,7 +74,6 @@
 #### 测试单个输入的相似度（可选）
 
     python3 -u sim/predict.py
-
 ### 3. 生成预测文件并提交
 
     python3 -u submit/generate_submit_file.py
@@ -89,7 +84,8 @@
     
    提交预测文件到<a href='www.CLUEbenchmarks.com'>测评系统</a>，并查看：<a href='https://www.cluebenchmarks.com/kgclue.html'>榜单效果</a>
 
-### 根据实体获得候选关系(-答案-实体释义)的es接口
+#### 根据实体获得候选关系(-答案-实体释义)的es接口
+    该接口会在预测阶段内部调用
     
     import requests, json
     data = {'entity': '马云'}
