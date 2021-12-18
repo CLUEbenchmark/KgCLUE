@@ -1,0 +1,20 @@
+python.exe run_ner.py \
+  --task_name=ner \
+  --data_dir=./Data/NER_Data \
+  --vocab_file=./ModelParams \
+  --bert_config_file=./ModelParams/bert_config.json \
+  --output_dir=./Output/NER \
+  --init_checkpoint=./ModelParams/bert_model.ckpt \
+  --data_config_path=./Config/NER/ner_data.conf \
+  --do_train=True \
+  --do_eval=True \
+  --max_seq_length=128 \
+  --lstm_size=128 \
+  --num_layers=1 \
+  --train_batch_size=64 \
+  --eval_batch_si ze=8 \
+  --predict_batch_size=8 \
+  --learning_rate=5e-5 \
+  --num_train_epochs=1 \
+  --droupout_rate=0.5 \
+  --clip=5
