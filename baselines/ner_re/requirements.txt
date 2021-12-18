@@ -1,0 +1,4 @@
+bert4keras==0.10.8
+tensorflow==1.14
+torch==1.7.1
+pylcs

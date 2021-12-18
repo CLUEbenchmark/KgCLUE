@@ -16,6 +16,7 @@ KgCLUE: 大规模中文开源知识图谱问答
 | [实验分析](#实验分析) | 对模型能力进行分析 |
 | [KgCLUE有什么特点](#KgCLUE有什么特点) | 特点介绍 |
 | [基线模型及运行](#基线模型及运行) | 支持多种基线模型 |
+| [相关阅读](#相关阅读) | 新方案及其解读 |
 | [排行榜及提交](#排行榜及提交) | 排行榜及提交样例 |
 | [贡献与参与](#贡献与参与) | 如何参与项目或反馈问题|
 
@@ -31,16 +32,16 @@ KgCLUE: 大规模中文开源知识图谱问答
 
 
 ### UPDATE:
-  
-  ******* 2021-11-02: 添加了知识库和问答数据集。
-  
-  ******* 2021-11-03: 添加支持KgCLUE的Bert的baseline
+  ******* 2021-12-18：添加完整基线模型(baselines/ner_sim)，包括预训练脚本及训练好的模型的下载地址
+   
+  ******* 2021-11-27：添加支持KgCLUE的Roberta-wwm-ext的baseline
 
   ******* 2021-11-15：添加支持KgCLUE的Roberta-wwm-large的baseline
 
-  ******* 2021-11-27：添加支持KgCLUE的Roberta-wwm-ext的baseline
+  ******* 2021-11-03: 添加支持KgCLUE的Bert的baseline
 
-
+  ******* 2021-11-02: 添加了知识库和问答数据集。
+  
 
 ## 任务描述
 
@@ -89,45 +90,119 @@ KBQA任务即为给定一份知识库和一份问答数据集，从问答数据�
 
 问答数据集为json格式，每行为一条问答对。问题是one-hop问题，即答案为知识库中的一条三元组。数据格式如下，其中id为问答对索引，quetion为问题，answer为答案，来自知识库，以' ||| '分割。
 
-## 实现思路
-下面简单介绍该任务的baseline的构建思路，但并不对任务数据进行详细介绍，如对任务数据不明白，请返回[数据集介绍](#数据集介绍)部分
-
-以下图片仅为思路参考
-
-bert-base-chinese版本
-
-#### NER阶段
- 我们使用BertForTokenClassification + crf来做NER任务，如图所示用于识别出问题中的实体
-<img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/BertForTokenClassification+crf.png"  width="100%" height="100%" /> 
-
-#### SIM阶段 
-我们使用BertForSequenceClassification，用于句子分类。把问题和属性拼接到一起，用于判断问题要问的是不是这个属性
-<img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/BertForSequenceClassification.png"  width="85%" height="85%" /> 
-
-#### chinese-roberta-wwm-ext-large以及chinese-roberta-wwm-ext模型
-我们同样适用NER+SIM的思路
-但在NER阶段采用了BERT+LSTM+CRF用于识别问题中的实体。输入是wordPiece tokenizer得到的tokenid，进入Bert预训练模型抽取丰富的文本特征得到batch_size * max_seq_len * emb_size的输出向量，输出向量过Bi-LSTM从中提取实体识别所需的特征，得到batch_size * max_seq_len * (2*hidden_size)的向量，最终进入CRF层进行解码，计算最优的标注序列。
-如图所示
-<img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/Bert-Bilstm-CRF.png"  width="100%" height="100%" /> 
-
-SIM阶段采用BERT作二分类模型
-
 
 ## 实验结果
 实验设置：训练集和验证集使用训练集与验证集，测试集使用公开测试集。
 
-| Model   | F1     | EM  |
-| :----:| :----:  |:----:  |
-| Bert-base-chinese |  81.8      |   79.1   |
-| chinese-roberta-wwm-ext-large |  82.6     |  80.6    |
-| chinese-roberta-wwm-ext |  82.3        |  80.2    |
+   <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/ner_re_performance.jpeg"  width="70%" height="70%" /> 
 
-| Model   | NER（F1-score）    | SIM(F1-score)  |
-| :----:| :----:  |:----:  |
-| Bert-base-chinese |  76.1      |   74.8   |
-| chinese-roberta-wwm-ext-large |  81.3     |  76.93    |
-| chinese-roberta-wwm-ext |  80.4     |  75.5   |
 
+## 实现思路
+下面简单介绍该任务的baseline的构建思路，但并不对任务数据进行详细介绍，如对任务数据不明白，请返回[数据集介绍](#数据集介绍)部分
+
+以下图片仅为思路参考，总体思路：
+
+    1.利用NER模型进行实体识别(S)；
+    2.根据识别到的实体，通过es接口找到可能的候选关系的列表；
+    3.训练相似度模型进行关系预测：输入为问句和候选关系，找到最可能的关系（P）；
+    4.最后根据实体（S）、关系(P)定位到答案（O,即尾实体）
+
+#### NER阶段
+ 做NER任务，如图所示用于识别出问题中的实体。
+ 
+<img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/BertForTokenClassification+crf.png"  width="100%" height="100%" /> 
+
+<img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/Bert-Bilstm-CRF.png"  width="100%" height="100%" /> 
+
+#### SIM阶段 
+我们使用句子分类任务（二分类），把问题和关系(属性）拼接到一起，用于判断问题要问的是不是这个属性。
+
+<img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/BertForSequenceClassification.png"  width="85%" height="85%" /> 
+
+## 基线模型及运行 
+
+### 环境依赖
+1）NER模型：
+     
+     python3.6+
+     1.1.0 =< pytorch < 1.5.0, or 1.7.1
+    
+2）SIM模型
+
+    python3.6+
+    tensorflow 1.14+
+    bert4keras, 0.10.8
+    
+### 如何运行
+
+    进入到ner_re的目录(cd baselines/ner_re)，然后循序执行以下1-2-3的命令。
+
+#### 1.NER模型(pytorch)
+##### 1.0 下载预训练模型
+ 下载并将预训练模型(<a href='https://github.com/ymcui/Chinese-BERT-wwm#%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9E%8B%E4%B8%8B%E8%BD%BD'>chinese_rbt3_pytorch</a>）放入到prev_trained_model目录。
+ pytorch版用于NER,tensorflow版用于相似度模型。
+
+##### 1.1 训练NER模型
+    bash scripts/run_ner_softmax.sh 
+    
+    其中，处理成NER训练数据的主要代码：processors/utils_ner.py的DataProcessor(65-96行)
+   
+   已经训练好的NER模型<a href='https://storage.googleapis.com/cluebenchmark/kgclue_models/RBT3_ner.zip'>下载</a>
+    
+##### 1.2 对测试集(test.json)进行预测，生成NER结果
+
+    bash scripts/run_ner_softmax.sh predict
+    
+    预测结果在这里：./outputs/kg_output/bert/test_prediction.json
+    生成的示例如:
+    {"id": 0, "tag_seq": "O O O O B-NER I-NER I-NER O O O O O O", "entities": [["NER", 4, 6]]}
+    {"id": 1, "tag_seq": "O O B-NER I-NER I-NER O O O O O O O O", "entities": [["NER", 2, 4]]}
+    {"id": 2, "tag_seq": "O O B-NER I-NER I-NER I-NER I-NER I-NER I-NER O O O O O O O O", "entities": [["NER", 2, 8]]}
+
+#### 2.SIM（相似度）模型
+#####  2.1 生成相似度训练数据
+
+    python3 -u  sim/process_sim_data.py
+    
+    其中，生成的相似度训练数据所在的目录为：./processed_data
+   
+   已经训练好的相似度(SIM)模型<a href='https://storage.googleapis.com/cluebenchmark/kgclue_models/RBT3_ner.zip'>下载</a>
+
+##### 2.2 训练SIM模型
+
+    python3 -u sim/train.py
+    
+    其中，相似度模型所在的位置：./outputs/kg_sim_output
+    
+##### 测试单个输入的相似度（可选）
+
+    python3 -u sim/predict.py
+
+#### 3. 生成预测文件并提交
+
+    python3 -u submit/generate_submit_file.py
+    
+    生成的文件为：./kgclue_predict_rbt3.json
+
+    使用如下命令压缩文件：zip -r kgclue_predict_rbt3.zip kgclue_predict_rbt3.json
+    
+   提交预测文件到<a href='www.CLUEbenchmarks.com'>测评系统</a>，并查看：<a href='https://www.cluebenchmarks.com/kgclue.html'>榜单效果</a>
+
+详细介绍见<a href='./baselines/ner_re/README.md'>./baselines/ner_re/README.md</a>
+
+
+### 相关阅读
+   <a href='https://kexue.fm/archives/8802'>《Seq2Seq+前缀树：检索任务新范式（以KgCLUE为例）》，苏剑林</a>
+    
+    本文介绍了检索模型的一种新方案——“Seq2Seq+前缀树”，并以KgCLUE为例给出了一个具体的baseline。
+    “Seq2Seq+前缀树”的方案有着训练简单、空间占用少等优点，也有一些不足之处，总的来说算得上是一种简明的有竞争力的方案。
+    
+>我们还提供了另一个代码库可以更简单方便的复现我们的效果https://github.com/CLUEbenchmark/KgCLUEbench
+
+## 效果评估脚本
+     Score=EM_O * 0.50 + F1_O * 0.50
+
+<a href='./baselines/evaluate_f1_em.py'>evaluate_f1_em.py</a>
 
 ## 实验分析
 
@@ -178,103 +253,6 @@ baseline都使用预训练模型直接做下游任务微调 bert-base-chinese，
 
 <a href="https://www.cluebenchmarks.com/kgclue.html" target="_blank">排行榜</a>
 
-## 基线模型及运行 
->我们提供了另一个代码库可以更简单方便的复现我们的效果https://github.com/CLUEbenchmark/KgCLUEbench
-### 数据处理
-```：
-1、运行baseline/dataProcessing/NERdata.py 处理NER数据
-2、运行baseline/dataProcessing/SIMdata.py 处理SIM数据
-``` 
-####  模型  
-#### 1）bert-base-chinese模型：
-
-​        环境准备：
-​          预先安装Python 3.x, pytorch version >=1.2.0, transformers versoin 2.0。
-​          需要预先下载预训练模型：bert-base-chinese，并放入到config目录下（这个文件夹）
-        <a href='https://huggingface.co/bert-base-chinese'> bert-base-chinese</a>
-          需要将第一步数据处理好的数据放入input文件夹
-​        
-​        运行：
-
-​        1、进入到相应的目录，运行相应的代码：
-```
-​           cd ./baseline/bert
-```
-​        2、运行代码
-```
-​           python3 NER.py 训练NER的模型
-           python3 SIM.py 训练相似度的模型
-           python3 test_kbqa.py 测试kbqa
-```
-
-#### 2）chinese-roberta-wwm-ext-large模型：
-```
-环境准备：
-    预先安装Python 3.x(或2.7), Tesorflow 1.14+, Keras 2.3.1, bert4keras。
-    需要预先下载预训练模型：chinese_roberta_wwm_ext-large，并放入到ModelParams目录下
-    需要将预先处理好的数据放入data文件夹中
-```
-运行：
-
-1、进入到相对应的目录：
-```
-cd ./baseline/RoBERTa-wwm-large
-```
-2、运行代码
-```
-./run_ner.sh
-./terminal_ner.sh
-python3 args.py
-python3 run_similarity.py
-python3 kbqa_test.py
-```
-
-
-#### 3）chinese-roberta-wwm-ext模型：
-```
-环境准备：
-    预先安装Python 3.x(或2.7), Tesorflow 1.14+
-    需要预先下载预训练模型：chinese_roberta_wwm_ext_L-12_H-768_A-12，并放入到chinese_roberta_wwm_ext_L-12_H-768_A-12目录下
-```
-运行：
-
-1、进入到相对应的目录：
-```
-cd ./baseline/RoBERTa-wwm-ext
-```
-2、运行代码
-```
-实体识别数据预处理
-修改好输入与输出的位置后运行 ./NER/ner_data_making.py
-训练实体识别
-./NER/ner_train.py
-文本相似度分类据预处理
-修改好输入与输出的位置后运行 ./SIM/sim_data_making.py
-训练文本相似度分类
-./SIM/sim_train.py
-```
-
-#### 4）如何测试：
-1、进入到相对应的目录：
-```
-cd ./baseline/Evaluation
-```
-2、修改下列指令：
-```
-python run_squad.py  \
-    --model_type bert   \
-    --model_name_or_path BERTmodel  \
-    --output_dir model \
-    --data_dir data/  \
-    --predict_file    \
-    --do_eval   \
-    --version_2_with_negative \
-    --do_lower_case  \
-    --per_gpu_eval_batch_size 12   \
-    --max_seq_length 384   \
-    --doc_stride 128
-```
-3、运行上述指令
 
 ## 问题 Question
     1. 问：测试系统，什么时候开发？
