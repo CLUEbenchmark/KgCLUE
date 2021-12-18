@@ -22,6 +22,8 @@
     tensorflow 1.14+
     bert4keras, 0.10.8
 
+使用命令进行安装：pip3 install -r requirements.txt
+
 ## 效果对比
    <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/ner_re_performance.jpeg"  width="70%" height="70%" /> 
 
@@ -38,8 +40,8 @@
     进入到ner_re的目录(cd baselines/ner_re)，然后循序执行以下1-2-3的命令。
 ### 1.NER模型(pytorch)
 #### 1.0 下载预训练模型
- 下载并将预训练模型(<a href='https://github.com/ymcui/Chinese-BERT-wwm#%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9E%8B%E4%B8%8B%E8%BD%BD'>chinese_rbt3_pytorch（用于NER）</a>）放入到prev_trained_model目录
- 下载并将预训练模型(<a href='https://github.com/ymcui/Chinese-BERT-wwm#%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9E%8B%E4%B8%8B%E8%BD%BD'>chinese_rbt3_pytorch（用于NER）</a>）放入到prev_trained_model目录
+ 下载并将预训练模型(<a href='https://github.com/ymcui/Chinese-BERT-wwm#%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9E%8B%E4%B8%8B%E8%BD%BD'>chinese_rbt3</a>）放入到prev_trained_model目录。
+ pytorch版用于ner模型,tensorflow版用于相似度(sim)模型
 
 #### 1.1 训练NER模型
     bash scripts/run_ner_softmax.sh 
@@ -64,13 +66,13 @@
     
     其中，生成的相似度训练数据所在的目录为：./processed_data
    
-   已经训练好的相似度(SIM)模型<a href='https://storage.googleapis.com/cluebenchmark/kgclue_models/RBT3_ner.zip'>下载</a>
 #### 2.2 训练SIM模型
 
     python3 -u sim/train.py
     
     其中，相似度模型所在的位置：./outputs/kg_sim_output
-    
+   已经训练好的相似度(SIM)模型<a href='https://storage.googleapis.com/cluebenchmark/kgclue_models/RBT3_sim.zip'>下载</a>
+
 #### 测试单个输入的相似度（可选）
 
     python3 -u sim/predict.py
@@ -110,6 +112,8 @@
 
 
 ### 参考项目或原始代码来源
-<a href='https://github.com/lonePatient/BERT-NER-Pytorch'>BERT-NER-Pytorch(NER模型的代码)</a>
-<a href='https://github.com/bojone/bert4keras/blob/master/examples/task_sentence_similarity_lcqmc.py'>bert4keras(相似度模型的代码)</a>
-<a href='https://github.com/ymcui/Chinese-BERT-wwm#%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9E%8B%E4%B8%8B%E8%BD%BD'>Chinese-BERT-wwm(预训练模型)</a>
+1. <a href='https://github.com/lonePatient/BERT-NER-Pytorch'>BERT-NER-Pytorch(NER模型的代码)</a>
+
+2. <a href='https://github.com/bojone/bert4keras/blob/master/examples/task_sentence_similarity_lcqmc.py'>bert4keras(相似度模型的代码)</a>
+
+3. <a href='https://github.com/ymcui/Chinese-BERT-wwm#%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9E%8B%E4%B8%8B%E8%BD%BD'>Chinese-BERT-wwm(预训练模型)</a>
