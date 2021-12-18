@@ -14,7 +14,7 @@
 ### 3. <a href="https://github.com/CLUEbenchmark/KgCLUEbench">KgCLUEbench</a>
 我们还提供了另一个代码库来复现我们的效果
   
-### 4. <a href='./other_implement'>原始方案</a>
+### 4. <a href='./other_implement/'>原始方案</a>
 
 ### 效果评估脚本
      Score=EM_O * 0.50 + F1_O * 0.50
