@@ -1,5 +1,5 @@
 import requests, json
-from sim.predict import Predictor
+from baselines.ner_re.sim.predict import Predictor
 import argparse
 
 """
@@ -12,9 +12,9 @@ import argparse
 """
 def generate_submit_file_fn(test_file,ner_predict_file,target_file):
     # 1.获取实体预测文件
-    test_file_object=open(test_file,'r')
+    test_file_object=open(test_file,'r',encoding='utf-8')
     test_lines=test_file_object.readlines()
-    target_object=open(target_file,'w')
+    target_object=open(target_file,'w',encoding='utf-8')
 
     predict_ner_test_object=open(ner_predict_file,'r')
     predict_ner_lines=predict_ner_test_object.readlines()
