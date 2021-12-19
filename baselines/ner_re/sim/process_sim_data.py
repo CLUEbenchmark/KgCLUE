@@ -7,8 +7,8 @@ import os
 """
 num_negative_examples=8
 def generate_train_data(source_file, target_file, target_file2=None):
-    source_lines=open(source_file,'r').readlines()
-    target_object=open(target_file,'w')
+    source_lines=open(source_file,'r',encoding='utf-8').readlines()
+    target_object=open(target_file,'w',encoding='utf-8')
     target_object2=''
     if target_file2 is not None:
         target_object2=open(target_file2,'w')
