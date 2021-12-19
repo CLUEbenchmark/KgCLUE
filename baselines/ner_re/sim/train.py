@@ -3,12 +3,7 @@
 import os
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 import tensorflow as tf
-physical_devices = tf.config.experimental.list_physical_devices('GPU')
-if len(physical_devices) > 0:
-    tf.config.experimental.set_memory_growth(physical_devices[0], True)
-else:
-    print("Not enough GPU hardware devices available")
-    print("Use CPU to train sim")
+
 import numpy as np
 from bert4keras.backend import keras, set_gelu, K
 from bert4keras.tokenizers import Tokenizer
