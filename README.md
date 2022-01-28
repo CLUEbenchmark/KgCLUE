@@ -265,7 +265,8 @@ baseline都使用预训练模型直接做下游任务微调 bert-base-chinese，
     
     3.如何交流？
      提交你的issue；加QQ群（群号:836811304）；或加入微信群
-   <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/kgcluegroup.jpeg"  width="50%" height="50%" /> 
+   <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/kgcluegroup.jpeg"  width="35%" height="35%" /> 
+   <img src="https://github.com/CLUEbenchmark/KgCLUE/blob/main/resources/img/brightmart.jpeg"  width="35%" height="35%" /> 
 
 
 
