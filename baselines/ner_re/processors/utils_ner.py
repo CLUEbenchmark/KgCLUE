@@ -1,6 +1,7 @@
 import csv
 import json
 import torch
+import numpy as np
 from transformers import BertTokenizer
 
 class DataProcessor(object):
@@ -56,10 +57,12 @@ class DataProcessor(object):
     def _read_json(self,input_file):
         lines = []
         count_error=0
+        count_total=0
         with open(input_file,'r') as f:
             # line: {"id": 19, "question": "济河的发源地是哪里？", "answer": "济河（豫鲁的河流） ||| 发源于 ||| 河南省济源市"}
             for indexx,line in enumerate(f):
                 line = json.loads(line.strip())
+                count_total=count_total+1
                 question = line['question']
                 answer = line.get('answer',None)
                 words = list(question)
@@ -71,12 +74,27 @@ class DataProcessor(object):
                 if "（" in entity:
                     entity=entity.split("（")[0]
                 # print("question:",question,";answer:",answer,";entity:",entity)
-
+                start_index=-1
                 if entity in question:
                     start_index=question.index(entity)
-                else:
-                    count_error=count_error+1
-                    continue
+                else: # 如果正常方式找不到，那么做一下处理，然后将公共子串作为实体。
+                    # 1)移除答案(answer)中的“·”、空格；2)取最长公共子串作为实体(entity)
+                    print("ERROR1.processors.utils_ner.read_json. question:"+question+";answer:",answer+";entity:"+entity)
+                    entity=entity.replace("·","").replace(" ","").strip()
+                    # 找到最长公共子串
+                    common_str_list=find_longest_common_str(question, entity)
+                    if common_str_list is None: # 如果没有公共子串的跳过
+                        count_error = count_error + 1
+                        continue
+                    target_common_str=''
+                    max_common_str_length=-1
+                    for common_str in common_str_list:
+                        if len(common_str)>max_common_str_length:
+                            max_common_str_length=len(common_str)
+                            target_common_str=common_str
+                    # 将最长公共子串作为目标实体
+                    entity=target_common_str
+                    print("CORRECT2.processors.utils_ner.read_json. question:"+question+";answer:",answer+";entity:"+entity)
                 length_entity=len(entity)
                 for ind in range(len(words)):
                     if ind>=start_index and ind<start_index+length_entity:
@@ -92,7 +110,9 @@ class DataProcessor(object):
                 if indexx<5:
                     print("words:",words,";labels:",labels,";answer:",answer)
                 lines.append({"words": words, "labels": labels})
-        print("count_error:",count_error)
+        print("utis_ner._read_json.count_error:",count_error,";count_total:",count_total)
+        # if count_error>0:
+        #     iii=0;iii/0
         return lines
 
 def get_entity_bios(seq,id2label):
@@ -196,6 +216,12 @@ def bert_extract_item(start_logits, end_logits):
     S = []
     start_pred = torch.argmax(start_logits, -1).cpu().numpy()[0][1:-1]
     end_pred = torch.argmax(end_logits, -1).cpu().numpy()[0][1:-1]
+    # print("utils_ner.bert_extract_item.start_logits:",start_logits,";start_pred:",start_pred)
+    # print("utils_ner.bert_extract_item.end_logits:",end_logits,";end_pred:",end_pred) # end_pred: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+    if np.sum(end_pred)==0:
+        numpy_array=np.array(end_logits[0][:, 1].cpu())[1:-1]
+        end_index=np.argmax(numpy_array)
+        end_pred[end_index]=1
     for i, s_l in enumerate(start_pred):
         if s_l == 0:
             continue
@@ -204,3 +230,47 @@ def bert_extract_item(start_logits, end_logits):
                 S.append((s_l, i, i + j))
                 break
     return S
+
+
+
+def find_longest_common_str(s1,s2):
+    """
+    查找最长公共子串
+    :param s1:
+    :param s2:
+    :return:
+    """
+    if len(s1) > len(s2):
+        s1,s2 = s2,s1
+        print(s1,s2)
+    length = len(s1)
+    result = []
+    for step in range(length,0 ,-1):
+        for start in range(0,length-step+1):
+            flag = True
+            tmp = s1[start:start+step]
+            if s2.find(tmp)>-1 :# 第一次找到,后面要接着找
+                result.append(tmp)
+                flag = True
+                newstart = start+1
+                newstep = step
+                while flag:   # 已经找到最长子串,接下来就是判断后面是否还有相同长度的字符串
+                    if newstart+ step >length:  # 大于字符串总长了,退出循环
+                        break
+                    newtmp = s1[newstart:newstart+newstep]
+                    if s2.find(newtmp)>-1:
+                        result.append(newtmp)
+                        newstart+=1
+                        flag = True
+                    else:
+                        newstart +=1
+                        flag = True
+                return result
+            else:
+                continue
+
+
+# str1 = 'abcdefgg好好学习denf'
+# str2 = 'denf好好学习abcd'
+# result=str_int(str1,str2)
+# print("result:",result)

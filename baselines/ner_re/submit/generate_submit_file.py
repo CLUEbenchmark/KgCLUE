@@ -1,5 +1,11 @@
 import requests, json
-from baselines.ner_re.sim.predict import Predictor
+import sys
+import re
+sys.path.append("../../../baselines/")
+try:
+    from baselines.ner_re.sim.predict import Predictor
+except Exception as e:
+    from sim.predict import Predictor
 import argparse
 
 """
@@ -10,11 +16,22 @@ import argparse
 4.利用相似性模型。使用问句和候选关系列表，得到最相关的关系
 5.利用实体、关系，定位到最终的答案
 """
-def generate_submit_file_fn(test_file,ner_predict_file,target_file):
+
+def contain_english(strings):
+    # 判断是否是英文
+    english_re = re.compile(r'[A-Za-z]', re.S)
+    english_list = re.findall(english_re, strings)
+    if len(english_list)>0:
+        return True
+    else:
+        return False
+
+def generate_submit_file_fn(test_file,ner_predict_file,target_file,log_file):
     # 1.获取实体预测文件
     test_file_object=open(test_file,'r',encoding='utf-8')
     test_lines=test_file_object.readlines()
     target_object=open(target_file,'w',encoding='utf-8')
+    log_object=open(log_file,'w',encoding='utf-8')
 
     predict_ner_test_object=open(ner_predict_file,'r')
     predict_ner_lines=predict_ner_test_object.readlines()
@@ -36,6 +53,11 @@ def generate_submit_file_fn(test_file,ner_predict_file,target_file):
         entities_with_indices=entities_with_indices[0]
         start_index, end_index=entities_with_indices[1],entities_with_indices[2]
         entity=question[start_index:end_index+1]
+
+        #################################################
+        if contain_english(entity) and " " in entity and contain_english(question[end_index+1:end_index+2]): # 实体包含英文，并且包含字母并且下一个字符也是英文 ==> 修正一个模型错误即预测时忽略了空格的位置（可能是由于数据处理原因引起）
+            entity=question[start_index:end_index+2]
+        #################################################
         question_entity_list.append([question, entity])
         if i <10:
             print(i, "json_data:", json_data)
@@ -58,18 +80,28 @@ def generate_submit_file_fn(test_file,ner_predict_file,target_file):
                 print(ii,"question:",question,";entity:",entity,";answer:",answer,";entity_additional:",entity_additional)
                 print(ii,"ambiguity_dict:",ambiguity_dict)
 
-                if entity_additional.isdigit()==False: # 不是数字即是文本，那么说明entity_additional中有内容，则使用
+                if entity_additional.isdigit()==False: # 不是数字即是文本，那么说明entity_additional中有内容，则使用entity_additional的内容。
                     entity=entity+"（"+entity_additional+"）"
 
                 json_string={"id":ii,"answer":entity.strip()+" ||| "+attribute.strip()+" ||| "+answer.strip()}
             else:
                 json_string = {"id": ii, "answer": ""}
+                # 写日志
+                # print(ii,type(attribute_list),attribute_list)
+                log_json={"id":ii,"question":question,"entity:":entity,"attribute_list:":str(attribute_list)}
+                log_json = json.dumps(log_json, ensure_ascii=False)
+                log_object.write(log_json+"\n")
         else:
             json_string={"id":ii,"answer":""}
+            # 写日志
+            log_json = {"id":ii,"question:":question}
+            log_json = json.dumps(log_json, ensure_ascii=False)
+            log_object.write(log_json + "\n")
         json_string = json.dumps(json_string, ensure_ascii=False)
         target_object.write(json_string + "\n")
     print("submit file generated. path:"+str(target_file))
     target_object.close()
+    log_object.close()
 
 parser = argparse.ArgumentParser(description='manual to this script')
 base_model_path = 'prev_trained_model/chinese_rbt3_L-3_H-768_A-12/'
@@ -122,4 +154,5 @@ def get_candidate_list_by_api(entity):
 test_file='../../datasets/test.json' # KgCLUE测试集
 ner_predict_file='outputs/kg_output/bert/test_prediction.json' # NER命名实体识别的预测文件
 target_file='kgclue_predict_rbt3.json'
-generate_submit_file_fn(test_file,ner_predict_file,target_file)
+log_file='./error_log.txt'
+generate_submit_file_fn(test_file,ner_predict_file,target_file,log_file)

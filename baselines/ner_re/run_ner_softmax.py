@@ -25,7 +25,7 @@ from processors.ner_seq import ner_processors as processors
 from processors.ner_seq import collate_fn
 from metrics.ner_metrics import SeqEntityScore
 from tools.finetuning_argparse import get_argparse
-os.environ["CUDA_VISIBLE_DEVICES"]="0"
+os.environ["CUDA_VISIBLE_DEVICES"]="3"
 MODEL_CLASSES = {
     ## bert ernie bert_wwm bert_wwwm_ext
     'bert': (BertConfig, BertSoftmaxForNer, BertTokenizer),
@@ -455,7 +455,7 @@ def main():
             model = model_class.from_pretrained(checkpoint)
             model.to(args.device)
             predict(args, model, tokenizer,prefix=prefix)
-        print("NER.do_predict.completed.args.output_dir:"+str(args.output_dir))
+        print("NER_softmax.do_predict.completed.args.output_dir:"+str(args.output_dir))
 
 if __name__ == "__main__":
     main()

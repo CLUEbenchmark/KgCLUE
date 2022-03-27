@@ -1,7 +1,7 @@
 #! -*- coding:utf-8 -*-
 # 句子对分类任务，KgCLUE数据集
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+# os.environ['CUDA_VISIBLE_DEVICES'] = '3'
 import tensorflow as tf
 
 import numpy as np
@@ -18,7 +18,7 @@ set_gelu('tanh')  # 切换gelu版本
 
 maxlen = 64
 batch_size = 128
-num_epoch=4
+num_epoch=12 # 4
 base_path='prev_trained_model/chinese_rbt3_L-3_H-768_A-12/'
 config_path = base_path+'bert_config_rbt3.json'
 checkpoint_path = base_path+'bert_model.ckpt'

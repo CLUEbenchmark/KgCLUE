@@ -258,9 +258,10 @@ def predict(args, model, tokenizer, prefix=""):
     logger.info("  Batch size = %d", 1)
 
     results = []
-    output_predict_file = os.path.join(pred_output_dir, prefix, "test_predict.json")
+    output_predict_file = os.path.join(pred_output_dir, prefix, "test_prediction.json")
     pbar = ProgressBar(n_total=len(test_dataloader), desc="Predicting")
     for step, batch in enumerate(test_dataloader):
+        # print(str(step)+"----------------------------")
         model.eval()
         batch = tuple(t.to(args.device) for t in batch)
         with torch.no_grad():
@@ -284,6 +285,8 @@ def predict(args, model, tokenizer, prefix=""):
     with open(output_predict_file, "w") as writer:
         for record in results:
             writer.write(json.dumps(record) + '\n')
+    print("NER_span.predict.completed.args.output_predict_file:" + str(output_predict_file))
+
     if args.task_name == "cluener":
         output_submit_file = os.path.join(pred_output_dir, prefix, "test_submit.json")
         test_text = []
@@ -313,6 +316,7 @@ def predict(args, model, tokenizer, prefix=""):
                         json_d['label'][tag][word] = [[start, end]]
             test_submit.append(json_d)
         json_to_text(output_submit_file, test_submit)
+
 
 
 def load_and_cache_examples(args, task, tokenizer, data_type='train'):
@@ -372,10 +376,10 @@ def load_and_cache_examples(args, task, tokenizer, data_type='train'):
 def main():
     args = get_argparse().parse_args()
     if not os.path.exists(args.output_dir):
-        os.mkdir(args.output_dir)
+        os.makedirs(args.output_dir)
     args.output_dir = args.output_dir + '{}'.format(args.model_type)
     if not os.path.exists(args.output_dir):
-        os.mkdir(args.output_dir)
+        os.makedirs(args.output_dir)
     time_ = time.strftime("%Y-%m-%d-%H:%M:%S", time.localtime())
     init_logger(log_file=args.output_dir + f'/{args.model_type}-{args.task_name}-{time_}.log')
     if os.path.exists(args.output_dir) and os.listdir(

@@ -72,7 +72,9 @@ def convert_examples_to_features(examples,label_list,max_seq_length,tokenizer,
         `cls_token_segment_id` define the segment id associated to the CLS token (0 for BERT, 2 for XLNet)
     """
     label2id = {label: i for i, label in enumerate(label_list)}
+    print("convert_examples_to_features.label2id:",str(label2id))
     features = []
+    error_count=0
     for (ex_index, example) in enumerate(examples):
         if ex_index % 10000 == 0:
             logger.info("Writing example %d of %d", ex_index, len(examples))
@@ -84,12 +86,20 @@ def convert_examples_to_features(examples,label_list,max_seq_length,tokenizer,
         start_ids = [0] * len(tokens)
         end_ids = [0] * len(tokens)
         subjects_id = []
+        # print(ex_index,"subjects:",example)
+        # print(ex_index,"label2id",label2id,";subjects:",subjects,";len(tokens):",len(tokens))
+        # subject: [['NER', 3, 5]]
+        # label2id: {'O': 0, 'NER': 1}
         for subject in subjects:
-            label = subject[0]
-            start = subject[1]
-            end = subject[2]
-            start_ids[start] = label2id[label]
-            end_ids[end] = label2id[label]
+            label = subject[0] # e.g NER
+            start = subject[1] # start: 2
+            end = subject[2]   #   end: 4
+            # print(ex_index,"label2id:",label2id,";label:",label,";start:",start,";end:",end)
+            try:
+                start_ids[start] = label2id[label]
+                end_ids[end] = label2id[label]
+            except Exception as e:
+                error_count=error_count+1
             subjects_id.append((label2id[label], start, end))
         # Account for [CLS] and [SEP] with "- 2".
         special_tokens_count = 2
@@ -173,6 +183,7 @@ def convert_examples_to_features(examples,label_list,max_seq_length,tokenizer,
                                   end_ids=end_ids,
                                   subjects=subjects_id,
                                   input_len=input_len))
+    print("error_count:",error_count)
     return features
 
 class CnerProcessor(DataProcessor):
@@ -244,9 +255,48 @@ class CluenerProcessor(DataProcessor):
             examples.append(InputExample(guid=guid, text_a=text_a, subject=subject))
         return examples
 
+class KgProcessor(DataProcessor):
+    """Processor for the chinese ner data set."""
+
+    def get_train_examples(self, data_dir):
+        """See base class."""
+        return self._create_examples(self._read_json(os.path.join(data_dir, "train.json")), "train")
+
+    def get_dev_examples(self, data_dir):
+        """See base class."""
+        return self._create_examples(self._read_json(os.path.join(data_dir, "dev.json")), "dev")
+
+    def get_test_examples(self, data_dir):
+        """See base class."""
+        return self._create_examples(self._read_json(os.path.join(data_dir, "test.json")), "test")
+
+    def get_labels(self):
+        """See base class."""
+        return ["O", "NER"]
+
+    def _create_examples(self, lines, set_type):
+        """Creates examples for the training and dev sets."""
+        examples = []
+        for (i, line) in enumerate(lines):
+            guid = "%s-%s" % (set_type, i)
+            text_a= line['words']
+            # BIOS
+            labels = line['labels']
+            subject = get_entities(labels,id2label=None,markup='bios')
+            if i<5:
+                print('processors.ner_span.KgProcessor.',i,"text_a:",str(text_a),";labels:",str(labels),";subject:",str(subject))
+                # text_a: ['你', '知', '道', '影', '舞', '者', '的', '车', '身', '有', '多', '重', '吗', '？'] ;
+                # labels: ['O', 'O', 'O', 'B-NER', 'I-NER', 'I-NER', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O'] ;
+                # subject: [['NER', 3, 5]]
+                # convert_examples_to_features.label2id: {'O': 0, 'NER': 1}
+            examples.append(InputExample(guid=guid, text_a=text_a, subject=subject))
+        return examples
+
 ner_processors = {
     "cner": CnerProcessor,
-    'cluener':CluenerProcessor
+    'cluener':CluenerProcessor,
+    'kg': KgProcessor
+
 }
 
 

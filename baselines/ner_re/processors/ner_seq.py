@@ -154,10 +154,10 @@ def convert_examples_to_features(examples,label_list,max_seq_length,tokenizer,
             segment_ids=segment_ids[0:max_seq_length]
             input_ids=input_ids[0:max_seq_length]
 
-            jump_count += 1
-            logger.info("-> *** len(tokens) != len(label_ids)  ***  <-")
+            logger.info("-> *** len(tokens) != len(label_ids)  ***  <-. len(label_ids):"+str(len(label_ids))+";max_seq_length:"+str(max_seq_length))
             logger.info(" ex_index = {}, tokens = {} ".format(ex_index, tokens))
             logger.info(" ex_index = {}, label_ids = {} ".format(ex_index, label_ids))
+            jump_count += 1
             # continue
 
         assert len(label_ids) == max_seq_length
