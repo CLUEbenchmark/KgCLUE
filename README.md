@@ -4,6 +4,7 @@ KgCLUE: 大规模中文开源知识图谱问答
 
 在线DEMO<a href="https://www.cluebenchmarks.com/KgCLUEdemo">点击此处</a>体验
 
+预约演示：<a href="https://www.modelfun.cn" target="_" style="color:red">数据集自动标注工具--释放AI潜力！</a>
 
 ## 内容导引
 | 章节 | 描述 |
